@@ -1,4 +1,4 @@
-paramiko==1.13.0
+paramiko==3.5.1
 termcolor
 Flask==0.10.1
 six

@@ -1,5 +1,3 @@
-import sys
-
 from setuptools import setup, find_packages
 
 setup(
@@ -24,7 +22,6 @@ setup(
         "paramiko",
         "termcolor",
         "flask",
-        "argparse" if sys.version_info[:2] < (2, 7) else None,
         "six",
     ])),
     classifiers=[
@@ -32,8 +29,6 @@ setup(
         'Intended Audience :: Developers',
         'Intended Audience :: System Administrators',
         'Programming Language :: Python',
-        'Programming Language :: Python :: 2',
-        'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.2',
         'Programming Language :: Python :: 3.3',

@@ -9,16 +9,13 @@ import sys
 import inspect
 import argparse
 
-try:
-    from itertools import izip_longest
-except ImportError:
-    from itertools import zip_longest as izip_longest
-import collections
+from collections import abc
+from itertools import zip_longest
 
 import six
 
-from .parsers.storm_config_parser import get_storm_config
-from . import __version__
+from storm.parsers.storm_config_parser import get_storm_config
+from storm import __version__
 
 
 class AliasedSubParsersAction(argparse._SubParsersAction):
@@ -95,7 +92,7 @@ class prog(object):
 
     def command(self, *args, **kwargs):
         """Convenient decorator simply creates corresponding command"""
-        if len(args) == 1 and isinstance(args[0], collections.Callable):
+        if len(args) == 1 and isinstance(args[0], abc.Callable):
             return self._generate_command(args[0])
         else:
             def _command(func):
@@ -147,9 +144,11 @@ class prog(object):
                                                aliases=aliases,
                                                help=func_help)
         spec = inspect.getargspec(func)
-        opts = reversed(list(izip_longest(reversed(spec.args or []),
-                                          reversed(spec.defaults or []),
-                                          fillvalue=self._POSITIONAL())))
+        opts = reversed(list(zip_longest(
+            reversed(spec.args or []),
+            reversed(spec.defaults or []),
+            fillvalue=self._POSITIONAL(),
+        )))
         for k, v in opts:
             argopts = getattr(func, 'argopts', {})
             args, kwargs = argopts.get(k, ([], {}))

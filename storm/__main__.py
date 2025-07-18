@@ -1,13 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-from __future__ import print_function
-
-
-try:
-    import __builtin__ as builtins
-except ImportError:
-    import builtins
+from collections import abc
 
 from storm import Storm
 from storm.parsers.ssh_uri_parser import parse
@@ -151,7 +145,7 @@ def update(name, connection_uri="", id_file="", o=[], config=None):
     storm_ = get_storm_instance(config)
     settings = {}
 
-    if id_file != "": 
+    if id_file != "":
         settings['identityfile'] = id_file
 
     for option in o:
@@ -224,10 +218,10 @@ def list(config=None):
                                 result += " {0}".format(custom_options)
                             extra = True
 
-                            if isinstance(value, collections.Sequence):
-                                if isinstance(value, builtins.list):
+                            if isinstance(value, abc.Sequence):
+                                if isinstance(value, list):
                                     value = ",".join(value)
-                                    
+
                             result += "{0}={1} ".format(key, value)
                     if extra:
                         result = result[0:-1]
